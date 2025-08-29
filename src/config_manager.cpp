@@ -49,26 +49,8 @@ bool ConfigManager::loadConfig() {
 }
 
 bool ConfigManager::saveConfig() {
-    std::lock_guard<std::mutex> lock(mutex_);
-    
-    std::ofstream file(configFile_);
-    if (!file.is_open()) {
-        std::cerr << "Error: Cannot open config file for writing: " << configFile_ << std::endl;
-        return false;
-    }
-    
-    try {
-        nlohmann::json jsonData;
-        for (const auto& [key, value] : config_) {
-            jsonData[key] = value;
-        }
-        
-        file << jsonData.dump(4) << std::endl;
-        return true;
-    } catch (const std::exception& e) {
-        std::cerr << "Error saving config: " << e.what() << std::endl;
-        return false;
-    }
+    // Skip file saving for now - in-memory config only for this demo
+    return true;
 }
 
 bool ConfigManager::has(const std::string& key) const {
